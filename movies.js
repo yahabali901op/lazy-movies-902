@@ -19,7 +19,7 @@ const MOVIES = [
     duration: "1h 45m",
     description: "Write a short description of your movie here.",
     poster: "https://placehold.co/400x600/1a1a1a/e50914?text=Movie+1",
-    video: "file:///C:/Wondershare%20UniConverter%2017/Converted/The%20Daily%20Life%20Of%20The%20Immortal%20King%20S02E05%20%7BHindi-English-Chinese%7D%20720p%20WEB-DL%20ESubs%20[BollyFlix].mp4"
+    video: "file:///C:/Users/motappa/Downloads/The%20Daily%20Life%20Of%20The%20Immortal%20King%20S02E05%20%7BHindi-English-Chinese%7D%20720p%20WEB-DL%20ESubs%20[BollyFlix].mp4"
   },
   {
     id: 2,
