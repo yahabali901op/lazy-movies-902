@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Movies</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" id="siteName">My Movies</a>
+    <input type="search" id="search" placeholder="Search movies...">
+  </header>
+
+  <main>
+    <h2>All Movies</h2>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" style="display:none">No movies found.</p>
+  </main>
+
+  <footer>&copy; <span id="year"></span> <span id="footName"></span></footer>
+
+  <script src="movies.js"></script>
+  <script>
+    document.getElementById("siteName").textContent = SITE_NAME;
+    document.getElementById("footName").textContent = SITE_NAME;
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.title = SITE_NAME;
+
+    const grid = document.getElementById("grid");
+    const empty = document.getElementById("empty");
+
+    function render(list) {
+      grid.innerHTML = "";
+      empty.style.display = list.length ? "none" : "block";
+      list.forEach(m => {
+        const a = document.createElement("a");
+        a.className = "card";
+        a.href = "watch.html?id=" + m.id;
+        const img = document.createElement("img");
+        img.src = m.poster; img.alt = m.title; img.loading = "lazy";
+        const info = document.createElement("div");
+        info.className = "info";
+        const t = document.createElement("div");
+        t.className = "title"; t.textContent = m.title;
+        const meta = document.createElement("div");
+        meta.className = "meta"; meta.textContent = m.year + " • " + m.genre;
+        info.append(t, meta);
+        a.append(img, info);
+        grid.appendChild(a);
+      });
+    }
+
+    render(MOVIES);
+
+    document.getElementById("search").addEventListener("input", e => {
+      const q = e.target.value.toLowerCase().trim();
+      render(MOVIES.filter(m =>
+        (m.title + " " + m.genre + " " + m.year).toLowerCase().includes(q)
+      ));
+    });
+  </script>
+</body>
+</html>

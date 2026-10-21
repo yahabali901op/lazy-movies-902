@@ -1,0 +1,30 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0d0d0d; color: #eee; font-family: Arial, Helvetica, sans-serif; }
+a { color: inherit; text-decoration: none; }
+
+header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 16px 5%; background: #141414; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 10; }
+.logo { font-size: 1.5rem; font-weight: bold; color: #e50914; }
+#search { padding: 10px 14px; width: 260px; max-width: 100%; border-radius: 6px; border: 1px solid #333; background: #1f1f1f; color: #fff; font-size: 1rem; }
+
+main { padding: 24px 5%; }
+h2 { margin-bottom: 16px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; }
+.card { background: #181818; border-radius: 8px; overflow: hidden; transition: transform .2s; }
+.card:hover { transform: scale(1.04); }
+.card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; background: #222; }
+.card .info { padding: 10px; }
+.card .title { font-weight: bold; font-size: .95rem; }
+.card .meta { font-size: .8rem; color: #999; margin-top: 4px; }
+
+.empty { color: #999; padding: 20px 0; }
+
+/* Watch page */
+.player-wrap { max-width: 1000px; margin: 0 auto; }
+video { width: 100%; max-height: 70vh; background: #000; border-radius: 8px; }
+.details h1 { margin: 18px 0 6px; }
+.details .meta { color: #999; margin-bottom: 14px; }
+.details p { line-height: 1.6; max-width: 800px; }
+.back { display: inline-block; margin-bottom: 14px; color: #e50914; }
+
+footer { text-align: center; padding: 30px; color: #666; font-size: .85rem; }

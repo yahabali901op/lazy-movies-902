@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Watch</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .notice { background: #2a1a1a; border: 1px solid #e50914; color: #ffb3b3; padding: 14px 16px; border-radius: 8px; margin: 12px 0; line-height: 1.5; display: none; }
+    .notice.show { display: block; }
+    .notice a { color: #fff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" id="siteName">Movies</a>
+  </header>
+
+  <main>
+    <div class="player-wrap" id="content"></div>
+  </main>
+
+  <footer>&copy; <span id="year"></span> <span id="footName"></span></footer>
+
+  <script src="movies.js"></script>
+  <script>
+    document.getElementById("siteName").textContent = SITE_NAME;
+    document.getElementById("footName").textContent = SITE_NAME;
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const id = Number(new URLSearchParams(location.search).get("id"));
+    const m = MOVIES.find(x => x.id === id);
+    const box = document.getElementById("content");
+
+    if (!m) {
+      box.innerHTML = '<a class="back" href="index.html">&larr; Back</a><p class="empty">Movie not found.</p>';
+    } else {
+      document.title = m.title + " - " + SITE_NAME;
+
+      const back = document.createElement("a");
+      back.className = "back"; back.href = "index.html"; back.textContent = "← All movies";
+
+      const notice = document.createElement("div");
+      notice.className = "notice";
+
+      const video = document.createElement("video");
+      video.controls = true;
+      video.preload = "metadata";
+      video.playsInline = true;
+      video.poster = m.poster;
+      video.src = m.video;
+
+      function showNotice(html) { notice.innerHTML = html; notice.classList.add("show"); }
+
+      if (!m.video || m.video.indexOf("YOUR-STORAGE-LINK") !== -1) {
+        showNotice("<b>No video link yet.</b> Open <code>movies.js</code> and replace the <code>video</code> link for this movie with your real .mp4 link, then upload the file again.");
+      } else if (location.protocol === "https:" && m.video.indexOf("http://") === 0) {
+        showNotice("<b>Link must start with https://</b> &mdash; your video link starts with http://, so the browser blocks it on this site.");
+      }
+
+      video.addEventListener("error", function () {
+        showNotice(
+          "<b>The video could not be loaded.</b> Check these:<br>" +
+          "1. <a href='" + m.video + "' target='_blank' rel='noopener'>Open the video link directly</a> &mdash; it should play or download.<br>" +
+          "2. Your storage must be public and its CORS policy must allow this site.<br>" +
+          "3. The file must be MP4 with H.264 video and AAC audio."
+        );
+      });
+
+      const d = document.createElement("div");
+      d.className = "details";
+      const h1 = document.createElement("h1"); h1.textContent = m.title;
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = [m.year, m.genre, m.duration].filter(Boolean).join(" • ");
+      const p = document.createElement("p"); p.textContent = m.description;
+      d.append(h1, meta, p);
+
+      box.append(back, video, notice, d);
+    }
+  </script>
+</body>
+</html>
